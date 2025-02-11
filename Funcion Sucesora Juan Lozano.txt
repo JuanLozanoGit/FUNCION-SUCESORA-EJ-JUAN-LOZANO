@@ -1,15 +1,15 @@
-print("Para que funcione correctamente, por favor utiliza los números naturales")
+print("Para que funcione correctamente, por favor utiliza los numeros naturales")
 
-#Primero empiezo usando el def, para definir la función sucesora y la antecesora
-#La función sucesora se basa en sumar +1 al resultado y devolverlo, entonces aplicamos el return n+1 (n es el numero)
+# Primero empiezo usando el def para definir la funcion sucesora y la antecesora
+# La funcion sucesora se basa en sumar +1 al resultado y devolverlo, entonces aplicamos el return n+1 (n es el numero)
 
 def Sucesora(n):
     """Devuelve el sucesor de un numero natural."""
     return n + 1
 
 
-#La función antecesora se basa en restar +1 al resultado y devolverlo, excepto si es 0, por lo que al ser los naturales no tienen que ser negativo
-#Si el usuario ingresa por error el 0, el raise que es utilizado para lanzar excepciones en este caso combinado con el ValueError, indicara que es un error
+# La funcion antecesora se basa en restar +1 al resultado y devolverlo, excepto si es 0, por lo que al ser los naturales no tienen que ser negativo
+# Si el usuario ingresa por error el 0, el raise que es utilizado para lanzar excepciones en este caso combinado con el ValueError, indicara que es un error
 
 def Antecesora(n):
     """Devuelve el antecesor de un numero natural, excepto para 0."""
@@ -18,17 +18,18 @@ def Antecesora(n):
     raise ValueError("No existe antecesor de 0 en los numeros naturales.")
 
 
-#Aca definimos a y b, como 2 datos, ya que para poder hacer cualquier operación se necesitan 2 o mas datos (números)
-#Como no queremos almacenar una variable dentro del bucle, vamos a usar el _ que indica que el ciclo se seguirá ejecutando n cantidad de veces
-#Utilizamos el a = Sucesora(a) como indicativo que a medida el valor se actualiza sumándole 1 a la función sucesora
+# Aca definimos a y b, como 2 datos, ya que para poder hacer cualquier operacion se necesitan 2 o mas datos (numeros)
+# Como no queremos almacenar una variable dentro del bucle, vamos a usar el _ que indica que el ciclo se seguira ejecutando n cantidad de veces
+# Utilizamos el a = Sucesora(a) como indicativo que a medida el valor se actualiza sumandole 1 a la funcion sucesora
 
 def suma(a, b):
-    """Suma dos números usando la funcion sucesora."""
+    """Suma dos numeros usando la funcion sucesora."""
     for _ in range(b):
         a = Sucesora(a)
     return a
 
 
+# Para la multiplicacion, usamos la suma repetida, es decir, sumamos "a" a si mismo "b" veces.
 def multiplicacion(a, b):
     """Multiplica dos numeros usando la suma."""
     resultado = 0
@@ -37,8 +38,10 @@ def multiplicacion(a, b):
     return resultado
 
 
+# Para la resta, usamos la funcion antecesora en lugar de hacer una resta directa.
+# Si el primer numero es menor que el segundo, lanzamos un error porque los numeros naturales no pueden ser negativos.
 def resta(a, b):
-    """Resta dos numeros usando la función antecesora."""
+    """Resta dos numeros usando la funcion antecesora."""
     if a < b:
         raise ValueError("La resta no esta definida para numeros naturales con resultado negativo.")
     for _ in range(b):
@@ -46,10 +49,12 @@ def resta(a, b):
     return a
 
 
+# Para la division, usamos la resta repetida hasta que "a" sea menor que "b".
+# Contamos cuantas veces podemos restar "b" de "a" hasta que no se pueda mas, y ese es el cociente.
 def division(a, b):
-    """Divide dos numeros naturales usando la resta."""
+    """Divide dos numeros usando la resta."""
     if b == 0:
-        raise ValueError("La división por 0 no está definida.")
+        raise ValueError("La division por 0 no esta definida.")
     cociente = 0
     while a >= b:
         a = resta(a, b)
@@ -57,8 +62,9 @@ def division(a, b):
     return cociente
 
 
+# Creamos una funcion para solicitar un numero al usuario y validamos que sea un numero natural (mayor o igual a 0).
 def obtener_numero(mensaje):
-    """Solicita al usuario un número natural válido."""
+    """Solicita al usuario un numero natural valido."""
     while True:
         try:
             num = int(input(mensaje))
@@ -66,13 +72,14 @@ def obtener_numero(mensaje):
                 raise ValueError
             return num
         except ValueError:
-            print("Por favor, ingrese un número natural válido.")
+            print("Por favor, ingrese un numero natural valido.")
 
 
+# Funcion principal del programa, donde pedimos al usuario los numeros y la operacion que desea realizar.
 def operaciones():
     """Funcion principal para solicitar la operacion y los numeros al usuario."""
     while True:
-        n = obtener_numero("¿Cuántos números deseas operar? ")
+        n = obtener_numero("¿Cuantos numeros deseas operar? ")
         if n < 2:
             print("Se requieren al menos dos numeros para operar.")
             continue
@@ -83,10 +90,10 @@ def operaciones():
         print("1. Suma")
         print("2. Multiplicacion")
         print("3. Resta")
-        print("4. División")
+        print("4. Division")
         print("5. Salir")
         
-        opcion = input("Elige la operación (1/2/3/4/5): ")
+        opcion = input("Elige la operacion (1-2-3-4), 5 para Salir del programa: ")
         
         if opcion == "5":
             print("Saliendo del programa...")
@@ -94,30 +101,29 @@ def operaciones():
         
         try:
             if opcion == "1":
-                resultado = sum(numeros[1:], numeros[0])  # Se usa la función suma definida
-                print(f"La suma de los números es: {resultado}")
+                resultado = suma(numeros[0], numeros[1])
+                print(f"La suma de los numeros es: {resultado}")
+
             elif opcion == "2":
-                resultado = numeros[0]
-                for num in numeros[1:]:
-                    resultado = multiplicacion(resultado, num)
-                print(f"La multiplicación de los números es: {resultado}")
+                resultado = multiplicacion(numeros[0], numeros[1])
+                print(f"La multiplicacion de los numeros es: {resultado}")
+
             elif opcion == "3":
-                resultado = numeros[0]
-                for num in numeros[1:]:
-                    resultado = resta(resultado, num)
-                print(f"La resta de los números es: {resultado}")
+                resultado = resta(numeros[0], numeros[1])
+                print(f"La resta de los numeros es: {resultado}")
+
             elif opcion == "4":
-                resultado = numeros[0]
-                for num in numeros[1:]:
-                    resultado = division(resultado, num)
-                print(f"La división de los números es: {resultado}")
+                resultado = division(numeros[0], numeros[1])
+                print(f"La division de los numeros es: {resultado}")
+
             else:
-                print("Operación no válida.")
+                print("Operacion no valida.")
         except ValueError as e:
             print(f"Error: {e}")
         
-        print("\n--- Nueva operación ---\n")
+        print("\n--- Nueva operacion ---\n")
 
 
+# Aca ejecutamos la funcion operaciones() solo si el codigo se ejecuta directamente.
 if __name__ == "__main__":
     operaciones()
